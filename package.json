@@ -2,10 +2,35 @@
   "name": "civitor",
   "version": "0.0.0",
   "description": "An rts video game of civilization",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "run-p build:watch serve",
+    "serve": "static-server client -p 3000",
+    "build": "rollup --config",
+    "build:watch": "rollup --config --watch",
+    "lint": "prettier src --check && eslint src",
+    "fix": "prettier src --write && eslint src --fix"
   },
   "author": "Alex Lockhart",
-  "license": "Unlicense"
+  "license": "Unlicense",
+  "dependencies": {
+    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-typescript": "^12.1.1",
+    "@types/lodash": "^4.17.13",
+    "@types/node": "20.0.0",
+    "esbuild": "^0.23.1",
+    "eslint": "^9.10.0",
+    "lodash": "^4.17.21",
+    "node-gyp": "^10.2.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.3.3",
+    "rollup": "^4.27.4",
+    "static-server": "^2.2.1",
+    "tslib": "^2.8.1",
+    "typescript": "5.4.3",
+    "typescript-eslint": "^8.5.0",
+    "undici-types": "^6.21.0",
+    "zod": "^3.23.8"
+  }
 }
