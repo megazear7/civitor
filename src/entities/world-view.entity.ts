@@ -1,5 +1,4 @@
-import Game from "./game.entity";
-import { WorldObjectData } from "../types/world-object-data.type";
+import { Game } from "./game.entity";
 
 export default class WorldView {
   game: Game;

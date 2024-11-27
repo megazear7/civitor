@@ -1,46 +1,41 @@
-import { GameConfig } from "../types/game-config.type";
-import { PlayerData } from "../types/player-data.type";
-import { GameId } from "../types/standard";
-import { WorldObjectData } from "../types/world-object-data.type";
-import { WorldZoneData } from "../types/world-zone-data.type";
+import { GameData } from "../types/game-data.type";
+import { GameStorage } from "../types/game-storage.type";
+import { GameId, GameStorageName } from "../types/standard";
+import { GameStorageLocal } from "./game-storage-local.service";
 
-const config: GameConfig = {
-  map: {
-    width: 5000,
-    height: 5000,
-  },
-  zone: {
-    width: 100,
-    height: 100,
-  },
-};
-
+/**
+ * This class should be responsible for pulling game data from some asynchronous data
+ * source such as local storage or from an api or something. This should be abstracted
+ * so that games can be saved in different places but it does not effect clients to
+ * the service.
+ */
 export class GameService {
-  gameId: GameId
+  gameId: GameId;
+  gameStorageName: GameStorageName;
+  storage: GameStorage;
 
-  constructor(gameId: GameId) {
+  constructor(gameId: GameId, gameStorageName: GameStorageName) {
     this.gameId = gameId;
+    this.gameStorageName = gameStorageName;
+
+    if (gameStorageName === GameStorageName.enum.local) {
+      this.storage = new GameStorageLocal(this.gameId);
+    } else if (gameStorageName === GameStorageName.enum.online) {
+      throw new Error("Not implemeneted");
+    } else {
+      throw new Error("Should not reach");
+    }
   }
 
-  async createGame(): Promise<void> {
+  async saveGame(game: GameData): Promise<void> {
+    this.storage.saveGameData(game);
   }
 
   async loadGame(): Promise<void> {
+    this.storage.loadGameData();
   }
 
-  async getConfig(): Promise<GameConfig> {
-    return config;
-  }
-
-  async getPlayers(): Promise<PlayerData[]> {
-    return [];
-  }
-
-  async getWorldObjects(): Promise<WorldObjectData[]> {
-    return [];
-  }
-
-  async getWorldZones(): Promise<WorldZoneData[]> {
-    return [];
+  async getGame(): Promise<GameData> {
+    return this.storage.getGameData();
   }
 }

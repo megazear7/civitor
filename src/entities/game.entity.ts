@@ -1,48 +1,47 @@
 import CpgCivitor from "../elements/cpg-civitor.element";
-import { WorldObjectData } from "../types/world-object-data.type";
-import { PlayerData } from "../types/player-data.type";
 import WorldView from "./world-view.entity";
-import { WorldZoneData } from "../types/world-zone-data.type";
-import { GameId, GameStatus } from "../types/standard";
+import { GameId, GameStatus, GameStorageName } from "../types/standard";
 import { GameService } from "../services/game.service";
-import { GameConfig } from "../types/game-config.type";
+import { GameData } from "../types/game-data.type";
 
 let x = 0;
 
-export default class Game {
+export class Game {
   element: CpgCivitor;
   gameStatus: GameStatus;
   gameId: GameId;
+  gameStorageName: GameStorageName;
   gameService: GameService;
   worldView: WorldView;
-  config: GameConfig | undefined;
-  objects: WorldObjectData[];
-  zones: WorldZoneData[];
-  players: PlayerData[] | undefined;
+  _gameData: GameData | null;
 
-  constructor(element: CpgCivitor, gameId: GameId | null) {
+  constructor(
+    element: CpgCivitor,
+    gameId: GameId | null,
+    gameStorageName: GameStorageName,
+  ) {
     this.element = element;
-    this.gameStatus = gameId === null ? GameStatus.enum.NeedToCreate : GameStatus.enum.NeedToLoad;
+    this.gameStatus =
+      gameId === null
+        ? GameStatus.enum.NeedToCreate
+        : GameStatus.enum.NeedToLoad;
     this.gameId = gameId || this.makeGameId();
-    this.gameService = new GameService(this.gameId);
+    this.gameStorageName = gameStorageName;
+    this.gameService = new GameService(this.gameId, this.gameStorageName);
     this.worldView = new WorldView(this);
-    this.objects = [];
-    this.zones = [];
-    this.players = [];
+    this._gameData = null;
   }
 
   async initialize(): Promise<void> {
     if (this.gameStatus === GameStatus.enum.NeedToCreate) {
-      await this.gameService.createGame();
+      this.createGame();
+      this.gameService.saveGame(this.gameData);
       this.gameStatus = GameStatus.enum.Created;
     } else {
       await this.gameService.loadGame();
+      this.gameData = await this.gameService.getGame();
       this.gameStatus = GameStatus.enum.Loaded;
     }
-    this.config = await this.gameService.getConfig();
-    this.objects = await this.gameService.getWorldObjects();
-    this.zones = await this.gameService.getWorldZones();
-    this.players = await this.gameService.getPlayers();
   }
 
   update(): void {
@@ -51,9 +50,25 @@ export default class Game {
     x++;
   }
 
+  set gameData(gameData: GameData) {
+    this._gameData = gameData;
+  }
+
+  get gameData(): GameData {
+    if (this._gameData === null) {
+      throw new Error("Game data not loaded");
+    }
+
+    return this._gameData;
+  }
+
+  createGame(): void {
+    // TODO implement
+  }
+
   makeGameId(): string {
-    let result = '';
-    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    let result = "";
+    const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
     const charactersLength = characters.length;
     let counter = 0;
     while (counter < 10) {
@@ -61,5 +76,5 @@ export default class Game {
       counter += 1;
     }
     return result;
-}
+  }
 }
