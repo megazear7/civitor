@@ -8,9 +8,12 @@ import {
 } from "../types/standard";
 import { GameService } from "../services/game.service";
 import { GameData } from "../types/game-data.type";
-import { WorldObjectData } from "../types/world-object-data.type";
-
-let x = 0;
+import {
+  WorldObjectData,
+  WorldObjectType,
+} from "../types/world-object-data.type";
+import { brushForest } from "../brushes/forest.brush";
+import { brushPerson } from "../brushes/person.brush";
 
 export class Game {
   element: CpgCivitor;
@@ -80,17 +83,11 @@ export class Game {
         }, this.pingPeriod);
       }
     }
-
-    this.element.context.fillStyle = `rgba(100, 0, 0, 1)`;
-    this.element.context.fillRect(5 + x, 5, 20, 20);
-    x++;
   }
 
   async startUpdating(): Promise<void> {
     const msFromLastUpdate = Date.now() - this.gameData.clock;
 
-    // TODO: All updates need adjusted based on the amount of time elasped since the last update
-    // so that objects move at the same speed regardless of how fast the computer renders frames.
     for (const worldObject of this.gameData.objects) {
       this.updateObject(worldObject, msFromLastUpdate);
     }
@@ -123,13 +120,28 @@ export class Game {
     return this._gameData;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   drawObject(worldObject: WorldObjectData): void {
-    //console.log(worldObject);
+    if (worldObject.type === WorldObjectType.enum.person) {
+      brushPerson(
+        this.element.context,
+        this.gameData.config.map,
+        this.worldView,
+        worldObject,
+      );
+    } else if (worldObject.type === WorldObjectType.enum.forest) {
+      brushForest(
+        this.element.context,
+        this.gameData.config.map,
+        this.worldView,
+        worldObject,
+      );
+    }
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   updateObject(worldObject: WorldObjectData, elapsedTime: number): void {
+    // TODO: All updates need adjusted based on the amount of time elasped since the last update
+    // so that objects move at the same speed regardless of how fast the computer renders frames.
     //console.log(worldObject, elapsedTime);
   }
 
