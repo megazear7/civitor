@@ -1,5 +1,7 @@
 # Civitor
 
+A civilization rts game
+
 ## Setup
 
 ```sh
@@ -8,7 +10,17 @@ npm install
 npm start
 ```
 
-A civilization video game
+Open http://localhost:3000
+
+## Develop
+
+```sh
+npm run start
+```
+
+Changes made under `src` and `client` will auto reload.
+
+## Next Steps
 
  - Arbitrary size map and Viewport.
  - Viewport associated to Player.

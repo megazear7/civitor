@@ -1,4 +1,5 @@
-import Game from "./game";
+import Game from "../entities/game.entity";
+import { GameId } from "../types/standard";
 
 export default class CpgCivitor extends HTMLElement {
   shadow: ShadowRoot;
@@ -6,6 +7,7 @@ export default class CpgCivitor extends HTMLElement {
   canvas: HTMLCanvasElement;
   context: CanvasRenderingContext2D;
   game: Game;
+  gameId: string | null;
 
   constructor() {
     super();
@@ -26,7 +28,8 @@ export default class CpgCivitor extends HTMLElement {
     this.canvas = this.shadow.querySelector("canvas") as HTMLCanvasElement;
     this.context = this.canvas.getContext("2d") as CanvasRenderingContext2D;
     this.container = this as HTMLElement;
-    this.game = new Game(this);
+    this.gameId = GameId.nullable().parse(new URLSearchParams(document.location.search).get("name"));
+    this.game = new Game(this, this.gameId);
   }
 
   connectedCallback(): void {
