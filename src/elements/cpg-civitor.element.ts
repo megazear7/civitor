@@ -33,6 +33,7 @@ export default class CpgCivitor extends HTMLElement {
     this.gameId = GameId.nullable().parse(searchParams.get("game"));
     this.type = GameStorageName.parse(searchParams.get("type"));
     this.game = new Game(this, this.gameId, this.type);
+    this.game.initialize();
     const url = new URL(window.location.href);
     url.searchParams.set("game", this.game.gameId);
     history.pushState(null, "", url);
@@ -61,7 +62,7 @@ export default class CpgCivitor extends HTMLElement {
         self.container.offsetWidth,
         self.container.offsetHeight,
       );
-      self.game.update();
+      self.game.frame();
     }
 
     animate();

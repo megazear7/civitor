@@ -13,3 +13,6 @@ export type GameStatus = z.infer<typeof GameStatus>;
 
 export const GameStorageName = z.enum(["local", "online"]);
 export type GameStorageName = z.infer<typeof GameStorageName>;
+
+export const UpdateStatus = z.enum(["updating", "updated", "idle"]);
+export type UpdateStatus = z.infer<typeof UpdateStatus>;

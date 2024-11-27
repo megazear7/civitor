@@ -32,7 +32,7 @@ export class GameService {
   }
 
   async loadGame(): Promise<void> {
-    this.storage.loadGameData();
+    return this.storage.loadGameData();
   }
 
   async getGame(): Promise<GameData> {

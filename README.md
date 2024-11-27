@@ -20,6 +20,8 @@ npm run start
 
 Changes made under `src` and `client` will auto reload.
 
+TODO: Is hot reloading working?
+
 ## Next Steps
 
  - Arbitrary size map and viewport

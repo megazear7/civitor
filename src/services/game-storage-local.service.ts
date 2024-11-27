@@ -20,7 +20,7 @@ export class GameStorageLocal implements GameStorage {
 
   async loadGameData(): Promise<void> {
     this.data = GameData.parse(
-      window.localStorage.getItem(this.localStorageKey),
+      JSON.parse(window.localStorage.getItem(this.localStorageKey) || ""),
     );
   }
 

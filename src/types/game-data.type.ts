@@ -5,6 +5,7 @@ import { WorldZoneData } from "./world-zone-data.type";
 import { PlayerData } from "./player-data.type";
 
 export const GameData = z.object({
+  clock: z.number().int(),
   config: GameConfig,
   objects: WorldObjectData.array(),
   zones: WorldZoneData.array(),
