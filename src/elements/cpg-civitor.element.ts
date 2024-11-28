@@ -56,12 +56,6 @@ export default class CpgCivitor extends HTMLElement {
     const self = this;
     function animate(): void {
       requestAnimationFrame(animate);
-      self.context.clearRect(
-        0,
-        0,
-        self.container.offsetWidth,
-        self.container.offsetHeight,
-      );
       self.game.frame();
     }
 

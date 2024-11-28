@@ -1,12 +1,17 @@
 import z from "zod";
+import { PxPerSecond } from "./standard";
 
 export const WorldObjectType = z.enum(["person", "forest"]);
 export type WorldObjectType = z.infer<typeof WorldObjectType>;
 
 export const BaseWorldObject = z.object({
   pos: z.object({
-    x: z.number().int(),
-    y: z.number().int(),
+    x: z.number(),
+    y: z.number(),
+  }),
+  vel: z.object({
+    dx: PxPerSecond,
+    dy: PxPerSecond,
   }),
 });
 export type BaseWorldObject = z.infer<typeof BaseWorldObject>;
