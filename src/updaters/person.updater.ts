@@ -1,15 +1,19 @@
+import { Person } from "../objects/person.object";
 import { GameData } from "../types/game-data.type";
+import { ArrayIndex } from "../types/standard.type";
 import { UpdaterFunction } from "../types/updater-function.type";
-import { Person, WorldObjectData } from "../types/world-object-data.type";
+import { WorldObjectData } from "../types/world-object-data.type";
+import { WorldObjectUpdate } from "../types/world-object-update.type";
 
 export const updatePerson: UpdaterFunction = (
   game: GameData,
-  object: WorldObjectData,
-): WorldObjectData => {
-  const person = Person.parse(object);
+  generic: WorldObjectData,
+  index: ArrayIndex,
+): WorldObjectUpdate[] => {
+  const object = Person.parse(generic);
 
-  person.pos.x += person.vel.dx;
-  person.pos.y += person.vel.dy;
+  object.pos.x += object.vel.dx;
+  object.pos.y += object.vel.dy;
 
-  return person;
+  return [{ object, index }];
 };

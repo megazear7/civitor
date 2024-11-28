@@ -1,25 +1,24 @@
 import CpgCivitor from "../elements/cpg-civitor.element";
 import WorldView from "./world-view.entity";
 import {
+  ArrayIndex,
   GameId,
   GameStatus,
   GameStorageName,
-  Milliseconds,
   MsSinceEpoch,
   UpdateStatus,
-} from "../types/standard";
+} from "../types/standard.type";
 import { GameService } from "../services/game.service";
 import { GameData } from "../types/game-data.type";
-import {
-  WorldObjectData,
-  WorldObjectType,
-} from "../types/world-object-data.type";
+import { WorldObjectData } from "../types/world-object-data.type";
 import { brushForest } from "../brushes/forest.brush";
 import { brushPerson } from "../brushes/person.brush";
 import { BrushFunction } from "../types/brush-function.type";
 import { updatePerson } from "../updaters/person.updater";
 import { updateForest } from "../updaters/forest.updater";
 import { UpdaterFunction } from "../types/updater-function.type";
+import { WorldObjectName } from "../types/world-object-name.type";
+import { seed } from "../utils/random.util";
 
 export class Game {
   element: CpgCivitor;
@@ -121,8 +120,8 @@ export class Game {
 
   drawObject(worldObject: WorldObjectData): void {
     const func: BrushFunction = {
-      [WorldObjectType.enum.person]: brushPerson,
-      [WorldObjectType.enum.forest]: brushForest,
+      [WorldObjectName.enum.person]: brushPerson,
+      [WorldObjectName.enum.forest]: brushForest,
     }[worldObject.type];
 
     func(
@@ -133,14 +132,17 @@ export class Game {
     );
   }
 
-  updateObject(index: Milliseconds): void {
+  updateObject(index: ArrayIndex): void {
     const worldObject = this.gameData.objects[index];
     const func: UpdaterFunction = {
-      [WorldObjectType.enum.person]: updatePerson,
-      [WorldObjectType.enum.forest]: updateForest,
+      [WorldObjectName.enum.person]: updatePerson,
+      [WorldObjectName.enum.forest]: updateForest,
     }[worldObject.type];
+    const updates = func(this.gameData, worldObject, index);
 
-    this.gameData.objects[index] = func(this.gameData, worldObject);
+    for (const update of updates) {
+      this.gameData.objects[update.index] = update.object;
+    }
   }
 
   createGame(): void {
@@ -165,9 +167,18 @@ export class Game {
             y: 100,
           },
           vel: {
-            dx: 1,
+            dx: 0,
             dy: 0,
           },
+          seed: seed(),
+        },
+        {
+          type: "forest",
+          pos: {
+            x: 100,
+            y: 200,
+          },
+          seed: seed(),
         },
       ],
       zones: [],

@@ -1,5 +1,8 @@
 import z from "zod";
 
+export const ArrayIndex = z.number().int().min(0);
+export type ArrayIndex = z.infer<typeof ArrayIndex>;
+
 export const GameId = z.string().length(10);
 export type GameId = z.infer<typeof GameId>;
 
@@ -31,3 +34,29 @@ export type Seconds = z.infer<typeof Seconds>;
 
 export const Pixels = z.number();
 export type Pixels = z.infer<typeof Pixels>;
+
+export const Position = z.object({
+  x: z.number(),
+  y: z.number(),
+});
+export type Position = z.infer<typeof Position>;
+
+export const Velocity = z.object({
+  dx: z.number(),
+  dy: z.number(),
+});
+export type Velocity = z.infer<typeof Velocity>;
+
+export const Color = z.object({
+  red: z.number().min(0).max(255),
+  green: z.number().min(0).max(255),
+  blue: z.number().min(0).max(255),
+  opacity: z.number().min(0).max(1),
+});
+export type Color = z.infer<typeof Color>;
+
+export const Seed = z.number();
+export type Seed = z.infer<typeof Seed>;
+
+export const RandomNumber = z.number().min(0).max(1);
+export type RandomNumber = z.infer<typeof RandomNumber>;

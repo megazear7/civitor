@@ -1,5 +1,5 @@
 import z from "zod";
-import { Milliseconds } from "./standard";
+import { Milliseconds } from "./standard.type";
 
 export const GameMapConfig = z.object({
   width: z.number().int(),

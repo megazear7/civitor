@@ -1,7 +1,12 @@
 import WorldView from "../entities/world-view.entity";
 import { BrushFunction } from "../types/brush-function.type";
 import { GameMapConfig } from "../types/game-config.type";
-import { Person, WorldObjectData } from "../types/world-object-data.type";
+import { Position } from "../types/standard.type";
+import { WorldObjectData } from "../types/world-object-data.type";
+import { drawCircle } from "../draw/circle.draw";
+import { Person } from "../objects/person.object";
+
+export const PERSON_RADIUS = 10;
 
 export const brushPerson: BrushFunction = (
   context: CanvasRenderingContext2D,
@@ -10,7 +15,11 @@ export const brushPerson: BrushFunction = (
   object: WorldObjectData,
 ): void => {
   const person = Person.parse(object);
-  // TODO: The position depends on the world view (aka view port)
-  context.fillStyle = `rgba(100, 0, 0, 1)`;
-  context.fillRect(person.pos.x, person.pos.y, 20, 20);
+  const pos: Position = {
+    x: person.pos.x - worldView.x,
+    y: person.pos.y - worldView.y,
+  };
+  const radius = PERSON_RADIUS * worldView.zoom;
+
+  drawCircle(context, { pos, radius });
 };

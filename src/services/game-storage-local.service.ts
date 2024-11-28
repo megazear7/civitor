@@ -1,6 +1,6 @@
 import { GameData } from "../types/game-data.type";
 import { GameStorage } from "../types/game-storage.type";
-import { GameId } from "../types/standard";
+import { GameId } from "../types/standard.type";
 
 /**
  * This services saves game state to localstorage.

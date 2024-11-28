@@ -1,5 +1,5 @@
 import { Game } from "../entities/game.entity";
-import { GameId, GameStorageName } from "../types/standard";
+import { GameId, GameStorageName } from "../types/standard.type";
 
 export default class CpgCivitor extends HTMLElement {
   shadow: ShadowRoot;

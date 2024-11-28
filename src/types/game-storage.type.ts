@@ -1,5 +1,5 @@
 import { GameData } from "./game-data.type";
-import { GameId } from "./standard";
+import { GameId } from "./standard.type";
 
 export interface GameStorage {
   gameId: GameId;

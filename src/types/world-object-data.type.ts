@@ -1,30 +1,6 @@
 import z from "zod";
-import { PxPerSecond } from "./standard";
-
-export const WorldObjectType = z.enum(["person", "forest"]);
-export type WorldObjectType = z.infer<typeof WorldObjectType>;
-
-export const BaseWorldObject = z.object({
-  pos: z.object({
-    x: z.number(),
-    y: z.number(),
-  }),
-  vel: z.object({
-    dx: PxPerSecond,
-    dy: PxPerSecond,
-  }),
-});
-export type BaseWorldObject = z.infer<typeof BaseWorldObject>;
-
-export const Person = BaseWorldObject.extend({
-  type: z.literal(WorldObjectType.enum.person),
-});
-export type Person = z.infer<typeof Person>;
-
-export const Forest = BaseWorldObject.extend({
-  type: z.literal(WorldObjectType.enum.forest),
-});
-export type Forest = z.infer<typeof Forest>;
+import { Person } from "../objects/person.object";
+import { Forest } from "../objects/forest.object";
 
 export const WorldObjectData = Person.or(Forest);
 export type WorldObjectData = z.infer<typeof WorldObjectData>;
