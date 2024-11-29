@@ -70,6 +70,8 @@ export class Game {
   }
 
   async frame(): Promise<void> {
+    this.worldView.update();
+
     if (this.updateStatus === UpdateStatus.enum.idle) {
       this.updateStatus = UpdateStatus.enum.updating;
       const now = Date.now();

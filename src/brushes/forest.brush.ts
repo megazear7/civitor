@@ -38,16 +38,16 @@ export const brushForest: BrushFunction = (
   const trees: PositionWithRadius[] = [];
   for (let i = 0; i < numberOfTrees; i++) {
     const factor = TREE_RADIUS * numberOfTrees;
-    trees.push({
+    trees.push(worldView.adjustPositionAndRadius({
       x: pos.x + random(object.seed + i) * factor - factor / 2,
       y: pos.y + random(object.seed - i) * factor - factor / 2,
       radius: TREE_RADIUS * (random(object.seed - 100 - i) * 0.25 + 0.75),
-    });
+    }));
   }
 
   for (const tree of trees) {
     const pos = { x: tree.x, y: tree.y };
-    const radius = worldView.adjustSize(tree.radius);
+    const radius = tree.radius;
     drawCircle(context, { pos, radius, fillColor, strokeColor });
   }
 };

@@ -5,6 +5,7 @@ A civilization rts game
 ## Controls
 
 +/- keys on keyboard will zoom in and out.
+wasd and arrow keys will scroll the view.
 
 ## Setup
 
