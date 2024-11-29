@@ -19,7 +19,7 @@ export const brushPerson: BrushFunction = (
     x: person.pos.x - worldView.x,
     y: person.pos.y - worldView.y,
   };
-  const radius = PERSON_RADIUS * worldView.zoom;
 
+  const radius = worldView.adjustSize(PERSON_RADIUS);
   drawCircle(context, { pos, radius });
 };

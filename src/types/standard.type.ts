@@ -41,6 +41,13 @@ export const Position = z.object({
 });
 export type Position = z.infer<typeof Position>;
 
+export const PositionWithRadius = z.object({
+  x: z.number(),
+  y: z.number(),
+  radius: z.number(),
+});
+export type PositionWithRadius = z.infer<typeof PositionWithRadius>;
+
 export const Velocity = z.object({
   dx: z.number(),
   dy: z.number(),
