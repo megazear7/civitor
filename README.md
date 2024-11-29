@@ -2,6 +2,10 @@
 
 A civilization rts game
 
+## Controls
+
++/- keys on keyboard will zoom in and out.
+
 ## Setup
 
 ```sh
