@@ -120,20 +120,22 @@ export default class WorldView {
       this.width += this.zoomIncrement;
 
       const changeInWidth = this.width - oldWidth;
-      const newX = this.x - (changeInWidth / 4);
-      this.x = newX > 0
-        ? newX + this.width < this.game.gameData.config.map.width
-          ? newX
-          : this.game.gameData.config.map.width - this.width
-        : 0;
+      const newX = this.x - changeInWidth / 4;
+      this.x =
+        newX > 0
+          ? newX + this.width < this.game.gameData.config.map.width
+            ? newX
+            : this.game.gameData.config.map.width - this.width
+          : 0;
 
       const changeInHeight = this.height - oldHeight;
-      const newY = this.y - (changeInHeight / 4);
-      this.y = newY > 0
-        ? newY + this.height < this.game.gameData.config.map.height
-          ? newY
-          : this.game.gameData.config.map.height - this.height
-        : 0;
+      const newY = this.y - changeInHeight / 4;
+      this.y =
+        newY > 0
+          ? newY + this.height < this.game.gameData.config.map.height
+            ? newY
+            : this.game.gameData.config.map.height - this.height
+          : 0;
 
       this.zoomIncrement *= 1 + this.zoomAcceleration;
     }
@@ -146,20 +148,22 @@ export default class WorldView {
       this.width -= this.zoomIncrement;
 
       const changeInWidth = oldWidth - this.width;
-      const newX = this.x + (changeInWidth / 4);
-      this.x = newX > 0
-        ? newX + this.width < this.game.gameData.config.map.width
-          ? newX
-          : this.game.gameData.config.map.width - this.width
-        : 0;
+      const newX = this.x + changeInWidth / 4;
+      this.x =
+        newX > 0
+          ? newX + this.width < this.game.gameData.config.map.width
+            ? newX
+            : this.game.gameData.config.map.width - this.width
+          : 0;
 
       const changeInHeight = oldHeight - this.height;
-      const newY = this.y + (changeInHeight / 4);
-      this.y = newY > 0
-        ? newY + this.height < this.game.gameData.config.map.height
-          ? newY
-          : this.game.gameData.config.map.height - this.height
-        : 0;
+      const newY = this.y + changeInHeight / 4;
+      this.y =
+        newY > 0
+          ? newY + this.height < this.game.gameData.config.map.height
+            ? newY
+            : this.game.gameData.config.map.height - this.height
+          : 0;
 
       this.zoomIncrement *= 1 + this.zoomAcceleration;
     }

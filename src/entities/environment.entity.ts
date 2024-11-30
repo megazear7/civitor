@@ -10,7 +10,10 @@ export default class Environment {
 
   draw(): void {
     drawRectangle(this.game.element.context, {
-      pos: { x: this.game.element.canvas.width / 2, y: this.game.element.canvas.height / 2 },
+      pos: {
+        x: this.game.element.canvas.width / 2,
+        y: this.game.element.canvas.height / 2,
+      },
       width: this.game.element.canvas.width,
       height: this.game.element.canvas.height,
       lineWidth: 0,

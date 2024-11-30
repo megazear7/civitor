@@ -10,11 +10,14 @@ export const Forest = BaseWorldObject.extend({
 });
 export type Forest = z.infer<typeof Forest>;
 
-export function buildForest(game: Game, {
-  pos = { x: 100, y: 100 },
-}: {
-  pos?: Position;
-} = {}): Forest {
+export function buildForest(
+  game: Game,
+  {
+    pos = { x: 100, y: 100 },
+  }: {
+    pos?: Position;
+  } = {},
+): Forest {
   const obj: Forest = {
     type: "forest",
     pos,

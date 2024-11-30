@@ -27,11 +27,8 @@ npm run start
 
 Changes made under `src` and `client` will auto reload.
 
-TODO: Is hot reloading working?
-
 ## Next Steps
 
- - Keep arrays of numbers for each zone, where the number in the array is an index targetting a object in the objects array
- - WorldObjects are placed into zones
  - Player can give commands to WorldObjects
  - Some WorldObjects have the move command
+ - Figure out path finding and collision detection

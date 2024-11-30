@@ -8,7 +8,7 @@ export const GameData = z.object({
   clock: z.number().int(),
   config: GameConfig,
   objects: WorldObjectData.array(),
-  zones: WorldZoneData.array(),
+  zones: WorldZoneData.array().array(),
   players: PlayerData.array(),
 });
 export type GameData = z.infer<typeof GameData>;

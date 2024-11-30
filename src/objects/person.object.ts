@@ -11,17 +11,20 @@ export const Person = BaseWorldObject.extend({
 });
 export type Person = z.infer<typeof Person>;
 
-export function buildPerson(game: Game, {
-  pos = { x: 100, y: 100 },
-}: {
-  pos?: Position;
-} = {}): Person {
+export function buildPerson(
+  game: Game,
+  {
+    pos = { x: 25, y: 50 },
+  }: {
+    pos?: Position;
+  } = {},
+): Person {
   const obj: Person = {
     type: "person",
     pos,
     vel: {
-      dx: 0,
-      dy: 0,
+      dx: 1,
+      dy: 1,
     },
     seed: seed(),
     zone: { row: 0, col: 0 },

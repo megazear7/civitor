@@ -4,6 +4,6 @@ import { Position, Seed, ZonePosition } from "./standard.type";
 export const BaseWorldObject = z.object({
   pos: Position,
   seed: Seed,
-  zone: ZonePosition,
+  zone: ZonePosition.nullable(),
 });
 export type BaseWorldObject = z.infer<typeof BaseWorldObject>;

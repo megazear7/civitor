@@ -8,6 +8,8 @@ export const GameMapConfig = z.object({
 export type GameMapConfig = z.infer<typeof GameMapConfig>;
 
 export const GameZoneConfig = z.object({
+  width: z.number().int(),
+  height: z.number().int(),
   columns: z.number().int(),
   rows: z.number().int(),
 });
