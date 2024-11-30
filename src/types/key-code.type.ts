@@ -11,5 +11,7 @@ export const KeyCode = z.enum([
   "ArrowLeft",
   "ArrowRight",
   "ArrowDown",
+  "KeyZ",
+  "KeyX",
 ]);
 export type KeyCode = z.infer<typeof KeyCode>;

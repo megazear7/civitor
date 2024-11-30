@@ -29,8 +29,8 @@ export const brushForest: BrushFunction = (
 ): void => {
   const forest = Forest.parse(object);
   const pos: Position = {
-    x: forest.pos.x - worldView.x,
-    y: forest.pos.y - worldView.y,
+    x: forest.pos.x,
+    y: forest.pos.y,
   };
   const fillColor = FOREST_FILL_COLOR;
   const strokeColor = FOREST_LINE_COLOR;
@@ -38,11 +38,13 @@ export const brushForest: BrushFunction = (
   const trees: PositionWithRadius[] = [];
   for (let i = 0; i < numberOfTrees; i++) {
     const factor = TREE_RADIUS * numberOfTrees;
-    trees.push(worldView.adjustPositionAndRadius({
-      x: pos.x + random(object.seed + i) * factor - factor / 2,
-      y: pos.y + random(object.seed - i) * factor - factor / 2,
-      radius: TREE_RADIUS * (random(object.seed - 100 - i) * 0.25 + 0.75),
-    }));
+    trees.push(
+      worldView.adjustPositionAndRadius({
+        x: pos.x + random(object.seed + i) * factor - factor / 2,
+        y: pos.y + random(object.seed - i) * factor - factor / 2,
+        radius: TREE_RADIUS * (random(object.seed - 100 - i) * 0.25 + 0.75),
+      }),
+    );
   }
 
   for (const tree of trees) {

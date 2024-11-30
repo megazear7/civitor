@@ -18,7 +18,10 @@ import { updatePerson } from "../updaters/person.updater";
 import { updateForest } from "../updaters/forest.updater";
 import { UpdaterFunction } from "../types/updater-function.type";
 import { WorldObjectName } from "../types/world-object-name.type";
-import { seed } from "../utils/random.util";
+import WorldGrid from "./world-grid.entity";
+import { buildPerson } from "../objects/person.object";
+import { buildForest } from "../objects/forest.object";
+import Environment from "./environment.entity";
 
 export class Game {
   element: CpgCivitor;
@@ -27,6 +30,8 @@ export class Game {
   gameStorageName: GameStorageName;
   gameService: GameService;
   worldView: WorldView;
+  worldGrid: WorldGrid;
+  environment: Environment;
   _gameData: GameData | null;
   updateStatus: UpdateStatus = UpdateStatus.enum.idle;
   pingPeriod: number = 50; // MS to wait before updating as non controller.
@@ -53,6 +58,8 @@ export class Game {
     this.gameStorageName = gameStorageName;
     this.gameService = new GameService(this.gameId, this.gameStorageName);
     this.worldView = new WorldView(this);
+    this.worldGrid = new WorldGrid(this);
+    this.environment = new Environment(this);
     this._gameData = null;
     this.lastUpdate = Date.now();
   }
@@ -115,9 +122,13 @@ export class Game {
       this.element.container.offsetHeight,
     );
 
+    this.environment.draw();
+
     for (const worldObject of this.gameData.objects) {
       this.drawObject(worldObject);
     }
+
+    this.worldGrid.draw();
   }
 
   drawObject(worldObject: WorldObjectData): void {
@@ -143,6 +154,7 @@ export class Game {
     const updates = func(this.gameData, worldObject, index);
 
     for (const update of updates) {
+      update.object.zone = this.worldGrid.findZone(update.object);
       this.gameData.objects[update.index] = update.object;
     }
   }
@@ -152,40 +164,25 @@ export class Game {
       clock: 0,
       config: {
         map: {
-          width: 10000,
-          height: 10000,
+          width: 2000,
+          height: 2000,
         },
         zone: {
-          width: 100,
-          height: 100,
+          rows: 2000 / 100,
+          columns: 2000 / 100,
         },
         speed: 10,
       },
-      objects: [
-        {
-          type: "person",
-          pos: {
-            x: 100,
-            y: 100,
-          },
-          vel: {
-            dx: 0,
-            dy: 0,
-          },
-          seed: seed(),
-        },
-        {
-          type: "forest",
-          pos: {
-            x: 100,
-            y: 200,
-          },
-          seed: seed(),
-        },
-      ],
+      objects: [],
       zones: [],
       players: [],
     };
+    this.gameData.objects.push(buildPerson(this));
+    this.gameData.objects.push(buildForest(this, { pos: { x: 210, y: 210 }}));
+    this.gameData.objects.push(buildForest(this, { pos: { x: 1750, y: 80 }}));
+    this.gameData.objects.push(buildForest(this, { pos: { x: 1750, y: 680 }}));
+    this.gameData.objects.push(buildForest(this, { pos: { x: 750, y: 880 }}));
+    this.gameData.objects.push(buildForest(this, { pos: { x: 950, y: 980 }}));
     this.gameService.saveGame(this.gameData);
   }
 

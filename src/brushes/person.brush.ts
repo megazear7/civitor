@@ -15,11 +15,11 @@ export const brushPerson: BrushFunction = (
   object: WorldObjectData,
 ): void => {
   const person = Person.parse(object);
+  const radius = worldView.adjustSize(PERSON_RADIUS);
   const pos: Position = worldView.adjustPosition({
-    x: person.pos.x - worldView.x,
-    y: person.pos.y - worldView.y,
+    x: person.pos.x,
+    y: person.pos.y,
   });
 
-  const radius = worldView.adjustSize(PERSON_RADIUS);
   drawCircle(context, { pos, radius });
 };

@@ -41,6 +41,12 @@ export const Position = z.object({
 });
 export type Position = z.infer<typeof Position>;
 
+export const ZonePosition = z.object({
+  row: z.number(),
+  col: z.number(),
+});
+export type ZonePosition = z.infer<typeof ZonePosition>;
+
 export const PositionWithRadius = z.object({
   x: z.number(),
   y: z.number(),

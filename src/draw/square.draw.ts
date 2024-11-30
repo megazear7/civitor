@@ -1,4 +1,5 @@
 import { Color, Position } from "../types/standard.type";
+import { drawRectangle } from "./rectangle.draw";
 
 export function drawSquare(
   context: CanvasRenderingContext2D,
@@ -16,15 +17,12 @@ export function drawSquare(
     lineWidth?: number;
   },
 ): void {
-  context.beginPath();
-  context.moveTo(pos.x - radius, pos.y - radius);
-  context.lineTo(pos.x + radius, pos.y - radius);
-  context.lineTo(pos.x + radius, pos.y + radius);
-  context.lineTo(pos.x - radius, pos.y + radius);
-  context.lineTo(pos.x - radius, pos.y - radius - lineWidth / 2);
-  context.lineWidth = lineWidth;
-  context.strokeStyle = `rgba(${strokeColor.red}, ${strokeColor.green}, ${strokeColor.blue}, ${strokeColor.opacity})`;
-  context.stroke();
-  context.fillStyle = `rgba(${fillColor.red}, ${fillColor.green}, ${fillColor.blue}, ${fillColor.opacity})`;
-  context.fill();
+  drawRectangle(context, {
+    pos,
+    width: radius,
+    height: radius,
+    fillColor,
+    strokeColor,
+    lineWidth,
+  });
 }

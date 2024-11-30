@@ -6,6 +6,8 @@ A civilization rts game
 
 +/- keys on keyboard will zoom in and out.
 wasd and arrow keys will scroll the view.
+z will toggle the grid.
+x will toggle the crosshairs.
 
 ## Setup
 
@@ -29,11 +31,7 @@ TODO: Is hot reloading working?
 
 ## Next Steps
 
- - Arbitrary size map and viewport
- - Define world zones based on config
- - Allow world zones to be revealed or hidden with a certain key press
- - Allow controller to move the world view
- - WorldObjects can be placed at locations
+ - Keep arrays of numbers for each zone, where the number in the array is an index targetting a object in the objects array
  - WorldObjects are placed into zones
  - Player can give commands to WorldObjects
  - Some WorldObjects have the move command
